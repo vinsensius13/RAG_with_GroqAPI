@@ -7,7 +7,10 @@
 
 </div>
 
-## Name : Arifian Saputra
-## Tech Stack : Python, Gradio, LangChain, HuggingFace Embedding, FAISS vector store
+### Name : Arifian Saputra
+### Tech Stack : Python, Gradio, LangChain, HuggingFace Embedding, FAISS vector store
 
-1. Analisis 
+#### 1. Analysis about how the project works
+#### - TODO
+#### - TODO
+
