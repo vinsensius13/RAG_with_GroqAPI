@@ -21,7 +21,7 @@
 def get_llm():
     return ChatGroq(
         groq_api_key=GROQ_API_KEY,
-        model_name="llama-3.3-70b-versatile", # Llama 3.3 70B Versatile
+        model_name="llama-3.3-70b-versatile", # Change the model in the code
         temperature=0.2
     )
 ```
