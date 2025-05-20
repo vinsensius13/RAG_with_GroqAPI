@@ -1,5 +1,5 @@
 <h1 align="center"> Retrieval-Augmented Generation with Gradio and Groq API Key</h1>
-<p align="center"> Generative AI Guided Project on Cognitive Class by IBM</p>
+<p align="center"> Natural Language Processing Project</p>
 
 <div align="center">
 
