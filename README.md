@@ -10,7 +10,9 @@
 ### Name : Arifian Saputra
 ### Tech Stack : Python, Gradio, LangChain, HuggingFace Embedding, FAISS vector store
 
-#### 1. Analysis about how the project works
+---
+
+### 1. Analysis about how the project works
 #### - TODO
 #### - TODO
 
