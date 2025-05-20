@@ -13,7 +13,7 @@
 ---
 
 ### 1. Analysis about how the project works
-#### - TODO
+- TODO
 
 ### 2. Analysis about how different every model works on Retrieval-Augmented Generation
 
@@ -25,16 +25,16 @@ def get_llm():
         temperature=0.2
     )
 ```
-#### - Model used : ```[llama-3.3-70b-versatile, deepseek-r1-distill-llama-70b, gemma2-9b-it]```
+- Model used : ```[llama-3.3-70b-versatile, deepseek-r1-distill-llama-70b, gemma2-9b-it]```
 
-#### Analysis on ```llama-3.3-70b-versatile``` : 
-#### - TODO
+2.1 Analysis on ```llama-3.3-70b-versatile``` : 
+- TODO
 
-#### Analysis on ```deepseek-r1-distill-llama-70b``` : 
-#### - TODO
+2.2 Analysis on ```deepseek-r1-distill-llama-70b``` : 
+- TODO
 
-#### Analysis on ```gemma2-9b-it``` : 
-#### - TODO
+2.3 Analysis on ```gemma2-9b-it``` : 
+- TODO
 
 ### 3. Analysis about how temperature works
 
@@ -47,11 +47,11 @@ def get_llm():
     )
 ```
 
-#### Analysis on higher temperature 
-#### - TODO
+3.1 Analysis on higher temperature 
+- TODO
 
-#### Analysis on lower temperature
-#### - TODO
+3.2 Analysis on lower temperature
+- TODO
 
 ### 4. How to run the project
 
@@ -63,3 +63,10 @@ GROQ_API_KEY=your-groq-api-key
 
 - Fill the ```GROQ_API_KEY``` with your Groq API Key, find it here : https://console.groq.com/keys
 
+- TODO
+- TODO
+- TODO
+- TODO
+- TODO
+- TODO
+- TODO
