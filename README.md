@@ -55,6 +55,12 @@ def get_llm():
 
 ### 4. How to run the project
 
+- Clone this repository with : 
+
+```git
+git clone https://github.com/arifian853/RAG_with_GroqAPI.git
+```
+
 - Copy the ```.env.example``` file and rename it to ```.env```
 
 ```
