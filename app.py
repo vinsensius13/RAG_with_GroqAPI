@@ -1,10 +1,11 @@
 import gradio as gr
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings  # Ganti FakeEmbeddings dengan embeddings yang sebenarnya
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_groq import ChatGroq
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
 import os
 from dotenv import load_dotenv  # Tambahkan untuk mengelola environment variables
 
@@ -17,18 +18,18 @@ if not GROQ_API_KEY:
     raise ValueError("GROQ_API_KEY tidak ditemukan. Pastikan Anda telah mengatur variabel lingkungan dengan benar.")
 
 # Inisialisasi LLM Groq 
-def get_llm():
+def get_llm(model_name="deepseek-r1-distill-llama-70b", temperature=0.2):
     return ChatGroq(
         groq_api_key=GROQ_API_KEY,
-        model_name="llama-3.3-70b-versatile",  # Pilih beberapa jenis model yang tersedia, analisis tiap hasil
-        temperature=0.2  # Utak atik nilai temperatur untuk mendapatkan hasil yang berbeda
+        model_name=model_name,
+        temperature=temperature
     )
 
 # Global QA Chain
 qa_chain = None
 
 # Fungsi proses PDF
-def process_pdf(file):
+def process_pdf(file, model_name="llama-3.3-70b-versatile", temperature=0.2):
     try:
         loader = PyPDFLoader(file.name)
         docs = loader.load_and_split()
@@ -40,21 +41,26 @@ def process_pdf(file):
         vectorstore = FAISS.from_documents(chunks, embeddings)
         retriever = vectorstore.as_retriever(search_kwargs={"k": 4})  # Ambil 4 dokumen teratas
         
-        qa = RetrievalQA.from_chain_type(llm=get_llm(), retriever=retriever, chain_type="stuff", return_source_documents=True)
+        qa = RetrievalQA.from_chain_type(
+            llm=get_llm(model_name=model_name, temperature=temperature),
+            retriever=retriever,
+            chain_type="stuff",
+            return_source_documents=True
+        )
         return qa, None
     except Exception as e:
         return None, f"Error: {str(e)}"
 
 # Saat user upload file
-def upload_file(file):
+def upload_file(file, model_name, temperature):
     global qa_chain
     if file is None:
         return "⚠️ Silakan pilih file PDF terlebih dahulu."
     
-    qa_chain, error = process_pdf(file)
+    qa_chain, error = process_pdf(file, model_name, temperature)
     if error:
         return error
-    return "✅ File berhasil diproses. Silakan ajukan pertanyaan."
+    return f"✅ File berhasil diproses. Model: {model_name}, Temperature: {temperature}. Silakan ajukan pertanyaan."
 
 # Jawab pertanyaan
 def ask_question(question):
@@ -78,6 +84,22 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:  # Tambahkan tema untuk UI yang 
         with gr.Column(scale=3):
             file_input = gr.File(file_types=[".pdf"], label="Unggah File PDF")
         with gr.Column(scale=1):
+            model_dropdown = gr.Dropdown(
+                choices=[
+                    "llama-3.3-70b-versatile",
+                    "deepseek-r1-distill-llama-70b",
+                    "gemma2-9b-it"
+                ],
+                value="llama-3.3-70b-versatile",
+                label="Pilih Model LLM"
+            )
+            temperature_slider = gr.Slider(
+                minimum=0.1,
+                maximum=0.9,
+                step=0.1,
+                value=0.2,
+                label="Temperature"
+            )
             process_button = gr.Button("Proses PDF", variant="primary")  # Tambahkan variant untuk tampilan yang lebih baik
     
     status = gr.Textbox(label="Status", interactive=False)
@@ -89,7 +111,8 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:  # Tambahkan tema untuk UI yang 
     
     answer = gr.Textbox(label="Jawaban", interactive=False)
 
-    process_button.click(upload_file, inputs=file_input, outputs=status)
+    # Update click handler supaya pass model & temperature
+    process_button.click(upload_file, inputs=[file_input, model_dropdown, temperature_slider], outputs=status)
     submit_btn.click(ask_question, inputs=question, outputs=answer)
     question.submit(ask_question, inputs=question, outputs=answer)
 
