@@ -7,7 +7,7 @@
 
 </div>
 
-### Name : Arifian Saputra
+### Name : Vinsensius Fendy Kurniawan
 ### Tech Stack : Python, Gradio, LangChain, HuggingFace Embedding, FAISS vector store
 
 ---
