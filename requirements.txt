@@ -1,6 +1,7 @@
 langchain
 langchain-community
 langchain-groq
+langchain-huggingface
 gradio
 pypdf
 python-dotenv
